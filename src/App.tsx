@@ -1,17 +1,12 @@
-import './index.css'
-import 'twin.macro'
-import 'styled-components/macro'
-import tw from 'twin.macro'
+import { useRoutes } from 'react-router-dom'
+
+// routers
+import { ROUTE_CONFIG } from './router/routes'
 
 function App() {
-  const hasHover = true
+  const element = useRoutes(ROUTE_CONFIG)
 
-  return (
-    <div className="App">
-      <h1 className="text-pink-100">Ya</h1>
-      <input css={[tw`border`, hasHover && tw`hover:border-black`]} />
-    </div>
-  )
+  return element
 }
 
 export default App

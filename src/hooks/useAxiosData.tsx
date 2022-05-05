@@ -52,9 +52,13 @@ export default function useAxiosData<ResponseObject = any, ParamObject = any>(
     []
   )
 
+  const reFetchData = () => {
+    fetchData(axiosParams, isPassAllowed)
+  }
+
   useEffect(() => {
     fetchData(axiosParams, isPassAllowed)
   }, deps)
 
-  return { response, isError, isLoading }
+  return { response, isError, isLoading, reFetchData }
 }

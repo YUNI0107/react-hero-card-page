@@ -20,3 +20,10 @@ export const heroList = [
     image: 'http://i.annihil.us/u/prod/marvel/i/mg/5/a0/538615ca33ab0/standard_xlarge.jpg',
   },
 ]
+
+export const abilityMock = {
+  str: 5,
+  int: 2,
+  agi: 0,
+  luk: 5,
+}

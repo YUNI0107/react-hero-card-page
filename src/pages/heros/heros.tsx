@@ -1,35 +1,22 @@
 import { Outlet, useParams } from 'react-router-dom'
 
-// hooks
-import useAxiosData from '@/hooks/useAxiosData'
+// contexts
+import HeroContextSection from '@/contexts/HeroContextSection'
 
-// constants
-import { GET_HERO_API } from '@/constants/apis'
-
-// types
-import { IHeroInformation } from '@/types/hero'
-
-// mocks TODO: Delete
-import { heroList } from '@/mocks/hero'
-import HeroCards from '@/components/layout/HeroCards'
+// components
+import HeroCardsSection from '@/components/layout/HeroCardsSection/HeroCardsSection'
 
 function HerosPage() {
   const { heroId } = useParams()
-  // const { response: heroCards } = useAxiosData<Array<IHeroInformation>>({
-  //   method: 'get',
-  //   url: GET_HERO_API,
-  // })
-
-  const heroCards = heroList
 
   return (
-    <div>
-      Heros {heroId}
-      {heroCards?.map((hero) => {
-        return <HeroCards key={hero.id} hero={hero} />
-      })}
-      <Outlet />
-    </div>
+    <HeroContextSection>
+      <div>
+        Heros {heroId}
+        <HeroCardsSection />
+        <Outlet />
+      </div>
+    </HeroContextSection>
   )
 }
 

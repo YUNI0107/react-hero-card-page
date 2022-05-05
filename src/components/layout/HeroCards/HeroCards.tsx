@@ -4,7 +4,7 @@ function HeroCards({ hero }: { hero: IHeroInformation }) {
   const { id, name, image } = hero
   return (
     <div>
-      {id} {name} <img src={image}></img>
+      {id} {name}
     </div>
   )
 }

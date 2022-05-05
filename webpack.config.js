@@ -54,4 +54,6 @@ module.exports = {
     open: true,
     historyApiFallback: true,
   },
+  // https://webpack.js.org/configuration/devtool/
+  devtool: 'eval-source-map',
 }

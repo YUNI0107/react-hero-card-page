@@ -23,14 +23,14 @@ function HeroProfilePage() {
   const abilityHandler = (ability: HeroAbilityKey, handler: 'plus' | 'minus') => {
     if (!profile) return
 
-    const forkProfile = profile
+    let abilityNewValue = profile[ability]
     if (handler === 'minus' && profile?.[ability] !== 0) {
-      forkProfile[ability] -= 1
+      abilityNewValue -= 1
     } else if (handler === 'plus' && remainingPoints !== 0) {
-      forkProfile[ability] += 1
+      abilityNewValue += 1
     }
 
-    setProfile({ ...forkProfile })
+    setProfile({ ...profile, [ability]: abilityNewValue })
   }
 
   const getProfilePoints = (profile: IHeroAbility | null) => {
@@ -48,13 +48,14 @@ function HeroProfilePage() {
 
   // memos
   const isKnownHero = useMemo(() => {
-    // Check is params is correct or not
+    // Check router param is correct or not
     return heroList.find((hero) => hero.id === heroId)
   }, [heroList])
 
   const remainingPoints = useMemo(() => {
-    const profilePoints = getProfilePoints(profile)
+    if (!profile) return 0
 
+    const profilePoints = getProfilePoints(profile)
     return totalPoints - profilePoints
   }, [totalPoints, profile])
 
@@ -86,11 +87,6 @@ function HeroProfilePage() {
         ability="agi"
         abilityHandler={abilityHandler}
         abilityValue={profile?.agi}
-      />
-      <AbilityController
-        ability="str"
-        abilityHandler={abilityHandler}
-        abilityValue={profile?.str}
       />
       <AbilityController
         ability="luk"

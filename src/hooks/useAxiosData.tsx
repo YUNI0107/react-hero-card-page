@@ -10,7 +10,7 @@ const instance = axios.create({
 })
 
 interface AxiosInterface<ParamObject> {
-  method: 'get' | 'post'
+  method: 'get' | 'post' | 'patch'
   url: string
   headers?: { [key: string]: string }
   params?: ParamObject

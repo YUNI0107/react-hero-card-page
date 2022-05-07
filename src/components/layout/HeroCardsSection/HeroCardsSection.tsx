@@ -1,14 +1,5 @@
 import { useContext } from 'react'
 
-// hooks
-import useAxiosData from '@/hooks/useAxiosData'
-
-// constants
-import { GET_HERO_API } from '@/constants/apis'
-
-// types
-import { IHeroInformation } from '@/types/hero'
-
 // components
 import HeroCards from '@/components/layout/HeroCards'
 
@@ -17,17 +8,13 @@ import { HeroContext } from '@/contexts/HeroContextSection'
 
 function HeroCardsSection() {
   const { heroList } = useContext(HeroContext)
-  // const { response: heroCards } = useAxiosData<Array<IHeroInformation>>({
-  //   method: 'get',
-  //   url: GET_HERO_API,
-  // })
 
   return (
-    <>
+    <div className="grid grid-cols-2 gap-4 w-full max-w-[1200px] bg-white p-5 rounded-md my-4 border-gray-800 border-4 md:grid-cols-4">
       {heroList?.map((hero) => {
         return <HeroCards key={hero.id} hero={hero} />
       })}
-    </>
+    </div>
   )
 }
 

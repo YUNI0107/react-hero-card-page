@@ -72,29 +72,37 @@ function HeroProfilePage() {
   }
 
   return (
-    <div>
-      <AbilityController
-        ability="str"
-        abilityHandler={abilityHandler}
-        abilityValue={profile?.str}
-      />
-      <AbilityController
-        ability="int"
-        abilityHandler={abilityHandler}
-        abilityValue={profile?.int}
-      />
-      <AbilityController
-        ability="agi"
-        abilityHandler={abilityHandler}
-        abilityValue={profile?.agi}
-      />
-      <AbilityController
-        ability="luk"
-        abilityHandler={abilityHandler}
-        abilityValue={profile?.luk}
-      />
+    <div className="w-full">
+      <div>
+        <AbilityController
+          ability="str"
+          abilityHandler={abilityHandler}
+          abilityValue={profile?.str}
+        />
+        <AbilityController
+          ability="int"
+          abilityHandler={abilityHandler}
+          abilityValue={profile?.int}
+        />
+        <AbilityController
+          ability="agi"
+          abilityHandler={abilityHandler}
+          abilityValue={profile?.agi}
+        />
+        <AbilityController
+          ability="luk"
+          abilityHandler={abilityHandler}
+          abilityValue={profile?.luk}
+        />
+      </div>
 
-      <h1>Remain {remainingPoints}</h1>
+      <div className="flex justify-end w-full">
+        <div>
+          <button>RESET</button>
+          <button>SEND</button>
+          <h1>Remain {remainingPoints}</h1>
+        </div>
+      </div>
     </div>
   )
 }

@@ -14,13 +14,17 @@ function AbilityController({
   abilityHandler: (ability: HeroAbilityKey, handler: 'plus' | 'minus') => void
 }) {
   return (
-    <div>
-      <h2>{ability}</h2>
+    <div className="flex items-center my-2">
+      <h2 className="">{ability}</h2>
 
-      <div>
-        <Button onClick={() => abilityHandler(ability, 'minus')}>mins</Button>
-        <p>{abilityValue || 0}</p>
-        <Button onClick={() => abilityHandler(ability, 'plus')}>plus</Button>
+      <div className="flex items-center">
+        <Button onClick={() => abilityHandler(ability, 'minus')}>
+          <p className="text-xl font-bold">-</p>
+        </Button>
+        <p className="text-white text-3xl font-bold mx-5">{abilityValue || 0}</p>
+        <Button onClick={() => abilityHandler(ability, 'plus')}>
+          <p className="text-xl font-bold">+</p>
+        </Button>
       </div>
     </div>
   )

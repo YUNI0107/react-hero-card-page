@@ -3,7 +3,7 @@ import { useContext } from 'react'
 
 // images
 import HeroLogoImage from '@/assets/images/logo.png'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 function Header() {
   const { heroList } = useContext(HeroContext)
@@ -13,7 +13,9 @@ function Header() {
   return (
     <div className="flex flex-col w-full md:flex-row md:items-center md:w-auto">
       <div className="w-32 border-2 mb-5 md:mr-5 md:mb-0 md:w-40">
-        <img className="w-full" src={HeroLogoImage} alt="logo" />
+        <Link to="/heros">
+          <img className="w-full" src={HeroLogoImage} alt="logo" />
+        </Link>
       </div>
 
       <div className="text-white">

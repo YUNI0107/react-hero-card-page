@@ -1,9 +1,19 @@
 import { ReactNode } from 'react'
+import { TwStyle } from 'twin.macro'
 
-function Button({ children, onClick }: { children: ReactNode; onClick: () => void }) {
+function Button({
+  children,
+  onClick,
+  twStyle,
+}: {
+  children: ReactNode
+  onClick: () => void
+  twStyle?: TwStyle
+}) {
   return (
     <button
-      className="bg-white w-4 h-4 p-4 rounded-full flex justify-center items-center"
+      className="px-5 py-1 rounded-md border-4 transition-all hover:scale-110"
+      css={[twStyle]}
       onClick={onClick}
     >
       {children}

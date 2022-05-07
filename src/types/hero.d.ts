@@ -1,3 +1,5 @@
+import { TwStyle } from 'twin.macro'
+
 export interface IHeroInformation {
   id: string
   name: string
@@ -11,3 +13,8 @@ export interface IHeroAbility {
   luk: number
 }
 export type HeroAbilityKey = keyof IHeroAbility
+
+export interface IHeroTheme {
+  id: string
+  background: TwStyle
+}

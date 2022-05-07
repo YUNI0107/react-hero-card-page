@@ -1,9 +1,5 @@
 import tw, { styled } from 'twin.macro'
 
-const HeroWrapper = styled.div`
-  ${tw`relative w-full pt-[100%]`}
-`
-
 const HeroContent = styled.div`
   ${tw`absolute top-0 left-0 w-full h-full rounded-full bg-gray-800 overflow-hidden p-1`}
 
@@ -33,6 +29,5 @@ const HeroContent = styled.div`
 `
 
 export const S = {
-  HeroWrapper,
   HeroContent,
 }

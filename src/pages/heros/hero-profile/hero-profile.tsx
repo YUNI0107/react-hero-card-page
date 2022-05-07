@@ -1,8 +1,10 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import tw from 'twin.macro'
 
 // components
 import AbilityController from '@/components/layout/AbilityController'
+import Button from '@/components/common/Button'
 
 // types
 import { IHeroAbility, HeroAbilityKey } from '@/types/hero'
@@ -46,11 +48,13 @@ function HeroProfilePage() {
     return profilePoints
   }
 
+  const resetPoints = () => {}
+
   // memos
   const isKnownHero = useMemo(() => {
     // Check router param is correct or not
     return heroList.find((hero) => hero.id === heroId)
-  }, [heroList])
+  }, [heroList, heroId])
 
   const remainingPoints = useMemo(() => {
     if (!profile) return 0
@@ -68,7 +72,7 @@ function HeroProfilePage() {
 
   // intercept
   if (!isKnownHero) {
-    return <p>Who is he?</p>
+    return <h1 className="text-white font-bold text-2xl">Who is he?</h1>
   }
 
   return (
@@ -78,29 +82,41 @@ function HeroProfilePage() {
           ability="str"
           abilityHandler={abilityHandler}
           abilityValue={profile?.str}
+          totalValue={totalPoints}
         />
         <AbilityController
           ability="int"
           abilityHandler={abilityHandler}
           abilityValue={profile?.int}
+          totalValue={totalPoints}
         />
         <AbilityController
           ability="agi"
           abilityHandler={abilityHandler}
           abilityValue={profile?.agi}
+          totalValue={totalPoints}
         />
         <AbilityController
           ability="luk"
           abilityHandler={abilityHandler}
           abilityValue={profile?.luk}
+          totalValue={totalPoints}
         />
       </div>
 
-      <div className="flex justify-end w-full">
+      <div className="flex items-center w-full flex-col mt-10 md:items-end">
+        <h1 className="text-4xl text-white font-bold mb-5">
+          <span className="mr-5 underline">Remain</span> {remainingPoints}{' '}
+          <span className="text-2xl">Points</span>
+        </h1>
+
         <div>
-          <button>RESET</button>
-          <button>SEND</button>
-          <h1>Remain {remainingPoints}</h1>
+          <Button onClick={resetPoints} twStyle={tw`bg-gray-800 border-gray-800 mr-5`}>
+            <h2 className="text-white font-bold text-2xl">RESET</h2>
+          </Button>
+          <Button onClick={resetPoints} twStyle={tw`bg-white border-gray-800`}>
+            <h2 className="text-gray-800 font-bold text-2xl">SEND</h2>
+          </Button>
         </div>
       </div>
     </div>

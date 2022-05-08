@@ -7,7 +7,7 @@ module.exports = {
   entry: ['@babel/polyfill', '/src/index.tsx'],
   output: {
     path: path.resolve(__dirname, './build'),
-    // // Bundling bundle.js when using react router, need to add publicPath
+    // // Bundling bundle.js when using react router in history mode, need to add publicPath
     // publicPath: '/',
     filename: 'bundle.js',
   },

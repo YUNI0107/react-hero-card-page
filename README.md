@@ -1,6 +1,8 @@
 # Hero Cards Page
 
-![Hero_1](./src//assets/images/hero_1.jpg)
+![Hero_1](./public/images/hero_1.jpg)
+
+[⭐️ Github-page Link](https://yuni0107.github.io/react-hero-card-page/)
 
 ## 如何執行？
 
@@ -26,14 +28,14 @@ yarn build
 
 ## Pages Preview
 
-![Hero_2](./src//assets/images/hero_2.jpg)
+![Hero_2](./public/images/hero_2.jpg)
 
 ### Hero profile
 
 調整英雄能力值，並可以觀看能力分配列表。
 提供三個按鈕，可以將數值歸零、回歸原本數值與送出新數值。
 
-![Hero_3](./src//assets/images/hero_3.jpg)
+![Hero_3](./public/images/hero_3.jpg)
 
 ### Others
 
@@ -47,7 +49,8 @@ yarn build
 1. 使用 Webpack 搭起 React + Typescript 專案。
 2. 使用 Prettier + Eslint 做 Coding style 規範。
 3. 使用 React Router6，使用 Config 檔作為 router 設定，製作 RouterIntercept，將從 `/` root domain 來的使用者導向 `/heroes`。
-4. 為了增加擴充性，未來如果 heros 不止四位也可以直接增加。（但如果沒有特別給予主題顏色，會呈現 Default 的黑色。）
+4. 由於有部署到 github-pages 上，為了使運作正常此專案使用 hash mode，換 url 時不會發送 request。
+5. 為了增加擴充性，未來如果 heros 不止四位也可以直接增加。（但如果沒有特別給予主題顏色，會呈現 Default 的黑色。）
 
 ### Css Part
 

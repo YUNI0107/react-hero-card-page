@@ -16,7 +16,8 @@ function HeroCards({ hero }: { hero: IHeroInformation }) {
       css={[heroId && !isSelected && tw`opacity-50 hover:opacity-100`]}
     >
       <div className="relative w-full pt-[100%]">
-        <S.HeroContent className="group">
+        <S.HeroContent className="group safari-hidden">
+          <S.HeroCircle className="group-hover:w-full" />
           <Link to={hero.id} className="w-full h-full" css={[isSelected && tw`cursor-default`]}>
             <div className="relative bg-white w-full h-full rounded-full z-10 p-2 transition duration-1000 hover:scale-90">
               <div className="relative w-full h-full z-20 rounded-full overflow-hidden">

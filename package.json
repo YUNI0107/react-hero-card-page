@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "homepage": "https://YUNI0107.github.io/react-organization-list",
+  "homepage": "https://YUNI0107.github.io/react-hero-card-page",
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack build --mode production",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
+    "lint": "eslint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

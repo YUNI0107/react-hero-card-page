@@ -66,22 +66,23 @@ yarn build
 ### 程式架構
 
 ```
-| -- public					# public folder
+| -- public		    # public folder
 | -- src
     | -- assets
             | -- images     # 圖檔資源
-	| -- components
-		| -- common         # 共用型的components
-        | -- layout         # 根據各page製作的的components
- 	| -- hooks              # custom hooks
-	| -- types              # type定義
+    | -- components
+            | -- common     # 共用型的components
+            | -- layout     # 根據各page製作的的components
+    | -- hooks              # custom hooks
+    | -- types              # type定義
     | -- mocks              # 切版用的假資料
     | -- pages              # 參考Next，頁面根據router層級整理
     | -- contexts           # 將context邏輯製作成組件
-	| -- constants          # 不會變動的 Constant Data
+    | -- constants          # 不會變動的 Constant Data
     | -- router             # router 相關
-	index.tsx				# Entry point
-	index.css				# Css Entry
+    index.tsx		    # Entry point
+    index.css		    # Css Entry
+    App.tsx
 .babelrc
 .eslintrc.json
 .prettierrc

@@ -3,35 +3,40 @@ import { Outlet, useParams } from 'react-router-dom'
 import tw from 'twin.macro'
 
 // components
-import HeroCardsSection from '@/components/layout/HeroCardsSection/HeroCardsSection'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
+import HeroCardsSection from '@/components/layout/heros/HeroCardsSection/HeroCardsSection'
+import Header from '@/components/layout/heros/Header'
+import Footer from '@/components/layout/heros/Footer'
+import LoadingSection from '@/components/common/LoadingSection'
 
 // contexts
 import { HeroContext } from '@/contexts/HeroContextSection'
 
 // // hooks
-// import useAxiosData from '@/hooks/useAxiosData'
+import useAxiosData from '@/hooks/useAxiosData'
 
 // // constants
-// import { GET_HERO_API } from '@/constants/apis'
+import { GET_HERO_API } from '@/constants/apis'
 
 // // types
-// import { IHeroInformation } from '@/types/hero'
+import { IHeroInformation } from '@/types/hero'
 
 function HerosPage() {
   const { heroId } = useParams()
-  const { theme, setTheme } = useContext(HeroContext)
+  const { theme, setTheme, setHeroList } = useContext(HeroContext)
 
-  // const { response: heroCards } = useAxiosData<Array<IHeroInformation>>({
-  //   method: 'get',
-  //   url: GET_HERO_API,
-  // })
+  const { response: heroCards, isLoading } = useAxiosData<Array<IHeroInformation>>({
+    method: 'get',
+    url: GET_HERO_API,
+  })
 
   // effects
   useEffect(() => {
     setTheme(heroId)
   }, [heroId])
+
+  useEffect(() => {
+    if (heroCards) setHeroList(heroCards)
+  }, [heroCards])
 
   return (
     <div
@@ -43,7 +48,14 @@ function HerosPage() {
         <Header />
         {/* main section */}
         <div className="w-full max-w-[1200px]">
-          <HeroCardsSection />
+          {isLoading ? (
+            <div className="my-20">
+              <LoadingSection />
+            </div>
+          ) : (
+            <HeroCardsSection />
+          )}
+
           <Outlet />
         </div>
       </div>

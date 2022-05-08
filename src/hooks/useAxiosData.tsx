@@ -7,6 +7,10 @@ import useMountedState from '@/hooks/useMountedState'
 const API_URL = 'https://hahow-recruit.herokuapp.com/'
 const instance = axios.create({
   baseURL: `${API_URL}`,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
 })
 
 interface AxiosInterface<ParamObject> {
@@ -14,13 +18,13 @@ interface AxiosInterface<ParamObject> {
   url: string
   headers?: { [key: string]: string }
   params?: ParamObject
-  data?: Object
+  data?: unknown
 }
 
 export default function useAxiosData<ResponseObject = any, ParamObject = any>(
   axiosParams: AxiosInterface<ParamObject>,
   deps: DependencyList = [],
-  isPassAllowed: boolean = true
+  isPassAllowed = true
 ) {
   const [response, setResponse] = useState<ResponseObject>()
   const [isError, setIsError] = useState(false)
@@ -29,30 +33,26 @@ export default function useAxiosData<ResponseObject = any, ParamObject = any>(
 
   const fetchData = useCallback(
     async (params: AxiosInterface<ParamObject>, isPassAllowed?: boolean) => {
-      if (!isPassAllowed) return
+      if (!isPassAllowed || !check()) return
+
+      setIsLoading(true)
 
       instance
         .request(params)
         .then((res) => {
-          if (!check()) return
+          setIsLoading(false)
           setIsError(false)
-          setIsLoading(true)
           setResponse(res.data)
         })
         .catch((err) => {
-          if (!check()) return
           setIsError(true)
           console.log(err)
-        })
-        .then(() => {
-          if (!check()) return
-          setIsLoading(false)
         })
     },
     []
   )
 
-  const reFetchData = () => {
+  const reFetchData = (isPassAllowed: boolean) => {
     fetchData(axiosParams, isPassAllowed)
   }
 

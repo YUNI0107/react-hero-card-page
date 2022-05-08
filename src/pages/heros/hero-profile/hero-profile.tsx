@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import tw from 'twin.macro'
 
 // components
-import AbilityController from '@/components/layout/AbilityController'
+import AbilityController from '@/components/layout/hero-profile/AbilityController'
 import Button from '@/components/common/Button'
 
 // types
@@ -12,18 +12,29 @@ import { IHeroAbility, HeroAbilityKey } from '@/types/hero'
 // contexts
 import { HeroContext } from '@/contexts/HeroContextSection'
 
-// mocks TODO: Delete
-import { abilityMock } from '@/mocks/hero'
+// hooks
+import useAxiosData from '@/hooks/useAxiosData'
 
 function HeroProfilePage() {
   const [profile, setProfile] = useState<IHeroAbility | null>(null)
   const [totalPoints, setTotalPoints] = useState(0)
+  const [warnMessage, setWarnMessage] = useState<string | null>(null)
   const { heroId } = useParams()
   const { heroList } = useContext(HeroContext)
+
+  // memos
+  const isKnownHero = useMemo(() => {
+    // Check router param is correct or not
+    return heroList.find((hero) => hero.id === heroId)
+  }, [heroList, heroId])
 
   // methods
   const abilityHandler = (ability: HeroAbilityKey, handler: 'plus' | 'minus') => {
     if (!profile) return
+
+    if (remainingPoints === 0 && !warnMessage) {
+      setWarnMessage('沒有可以分配的點數。')
+    }
 
     let abilityNewValue = profile[ability]
     if (handler === 'minus' && profile?.[ability] !== 0) {
@@ -48,13 +59,38 @@ function HeroProfilePage() {
     return profilePoints
   }
 
-  const resetPoints = () => {}
+  const setDateToProfile = () => {
+    if (!abilityData) return
+    const profilePoints = getProfilePoints(abilityData)
+    setProfile(abilityData)
+    setTotalPoints(profilePoints)
+  }
 
-  // memos
-  const isKnownHero = useMemo(() => {
-    // Check router param is correct or not
-    return heroList.find((hero) => hero.id === heroId)
-  }, [heroList, heroId])
+  const sendPoints = () => {
+    if (remainingPoints !== 0) {
+      setWarnMessage('還有剩餘點數未使用。')
+      return
+    }
+
+    resetProfile(Boolean(heroId) && Boolean(profile))
+  }
+
+  const resetPoints = () => {
+    setDateToProfile()
+  }
+
+  const resetToZero = () => {
+    if (!profile) return
+
+    const resetProfile = { ...profile }
+    let ability: keyof IHeroAbility
+
+    for (ability in resetProfile) {
+      resetProfile[ability] = 0
+    }
+
+    setProfile(resetProfile)
+  }
 
   const remainingPoints = useMemo(() => {
     if (!profile) return 0
@@ -63,16 +99,45 @@ function HeroProfilePage() {
     return totalPoints - profilePoints
   }, [totalPoints, profile])
 
-  useEffect(() => {
-    const profilePoints = getProfilePoints(abilityMock)
+  // api
+  const { response: abilityData } = useAxiosData<IHeroAbility>(
+    {
+      url: `heroes/${heroId}/profile`,
+      method: 'get',
+    },
+    [heroId, isKnownHero],
+    Boolean(heroId) && Boolean(isKnownHero)
+  )
 
-    setProfile(abilityMock)
-    setTotalPoints(10 + profilePoints)
-  }, [])
+  const { reFetchData: resetProfile } = useAxiosData<IHeroAbility>(
+    {
+      url: `heroes/${heroId}/profile`,
+      method: 'patch',
+      data: profile,
+    },
+    [],
+    Boolean(heroId) && Boolean(profile)
+  )
+
+  // effects
+  useEffect(() => {
+    setDateToProfile()
+  }, [abilityData])
+
+  useEffect(() => {
+    // If user still have points but have warnMessage, clear it
+    if (remainingPoints > 0 && warnMessage) {
+      setWarnMessage(null)
+    }
+  }, [remainingPoints])
 
   // intercept
+  if (heroList.length === 0) {
+    return
+  }
+
   if (!isKnownHero) {
-    return <h1 className="text-white font-bold text-2xl">Who is he?</h1>
+    return <h1 className="text-white font-bold text-3xl text-center">Who is he?</h1>
   }
 
   return (
@@ -105,16 +170,24 @@ function HeroProfilePage() {
       </div>
 
       <div className="flex items-center w-full flex-col mt-10 md:items-end">
-        <h1 className="text-4xl text-white font-bold mb-5">
-          <span className="mr-5 underline">Remain</span> {remainingPoints}{' '}
-          <span className="text-2xl">Points</span>
-        </h1>
+        <div className="text-white">
+          {warnMessage && <p>{warnMessage}</p>}
+          <h1 className="text-4xl font-bold mb-5">
+            <span className="mr-5 underline">Remain</span> {remainingPoints}{' '}
+            <span className="text-2xl">Points</span>
+          </h1>
+        </div>
 
-        <div>
-          <Button onClick={resetPoints} twStyle={tw`bg-gray-800 border-gray-800 mr-5`}>
-            <h2 className="text-white font-bold text-2xl">RESET</h2>
-          </Button>
-          <Button onClick={resetPoints} twStyle={tw`bg-white border-gray-800`}>
+        <div className="flex flex-col items-center md:flex-row">
+          <div className="mb-5 md:mb-0">
+            <Button onClick={resetToZero} twStyle={tw`bg-gray-800 border-gray-800 mr-5`}>
+              <h2 className="text-white font-bold text-2xl">TO ZERO</h2>
+            </Button>
+            <Button onClick={resetPoints} twStyle={tw`bg-gray-800 border-gray-800 mr-5`}>
+              <h2 className="text-white font-bold text-2xl">RESET</h2>
+            </Button>
+          </div>
+          <Button onClick={sendPoints} twStyle={tw`bg-white border-gray-800`}>
             <h2 className="text-gray-800 font-bold text-2xl">SEND</h2>
           </Button>
         </div>

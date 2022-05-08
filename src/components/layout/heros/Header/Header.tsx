@@ -1,9 +1,9 @@
 import { HeroContext } from '@/contexts/HeroContextSection'
 import { useContext } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 // images
 import HeroLogoImage from '@/assets/images/logo.png'
-import { Link, useParams } from 'react-router-dom'
 
 function Header() {
   const { heroList } = useContext(HeroContext)

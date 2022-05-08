@@ -10,7 +10,7 @@ function Footer() {
         </div>
       </a>
       <p className="mx-2">|</p>
-      <p>2020.05.09 @YUNI0107</p>
+      <p>2022.05.09 @YUNI0107</p>
     </div>
   )
 }

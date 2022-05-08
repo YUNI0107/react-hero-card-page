@@ -3,9 +3,6 @@ import { createContext, ReactNode, useState } from 'react'
 // types
 import { IHeroTheme, IHeroInformation } from '@/types/hero'
 
-// mocks TODO: Delete
-import { heroList } from '@/mocks/hero'
-
 // constants
 import { themeList } from '@/constants/style'
 
@@ -17,7 +14,7 @@ interface IHeroContext {
 }
 
 const defaultHero: IHeroContext = {
-  heroList: heroList,
+  heroList: [],
   setHeroList: () => {},
   theme: null,
   setTheme: (currentHeroId?: string) => {

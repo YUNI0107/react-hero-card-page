@@ -16,7 +16,7 @@ const HeroCircle = styled.div`
       transform: translate(-50%, -50%) rotate(0deg);
     }
 
-    0% {
+    100% {
       transform: translate(-50%, -50%) rotate(360deg);
     }
   }

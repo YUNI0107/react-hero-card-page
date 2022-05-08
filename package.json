@@ -2,7 +2,7 @@
   "name": "react-hero-card-page",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "homepage": "https://YUNI0107.github.io/react-hero-card-page",
   "scripts": {
     "start": "webpack serve --mode development",
@@ -31,6 +31,7 @@
     "babel-plugin-styled-components": "^2.0.7",
     "babel-plugin-twin": "^1.0.2",
     "css-loader": "^6.7.1",
+    "dotenv": "^16.0.0",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.29.4",

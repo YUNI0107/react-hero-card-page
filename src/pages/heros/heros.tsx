@@ -12,7 +12,7 @@ import LoadingSection from '@/components/common/LoadingSection'
 import { HeroContext } from '@/contexts/HeroContextSection'
 
 // // hooks
-import useAxiosData from '@/hooks/useAxiosData'
+import useGetResponse from '@/hooks/useGetResponse'
 
 // // constants
 import { GET_HERO_API } from '@/constants/apis'
@@ -24,7 +24,7 @@ function HerosPage() {
   const { heroId } = useParams()
   const { theme, setTheme, setHeroList } = useContext(HeroContext)
 
-  const { response: heroCards, isLoading } = useAxiosData<Array<IHeroInformation>>({
+  const { response: heroCards, isLoading } = useGetResponse<Array<IHeroInformation>>({
     method: 'get',
     url: GET_HERO_API,
   })

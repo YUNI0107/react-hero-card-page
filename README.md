@@ -100,7 +100,7 @@ postcss.config.js
 ### [Axios](https://axios-http.com/)
 
 - 簡介：Promise based HTTP client for the browser and node.js. 官網的這句話其實已經囊括了這個套件的精神。 Axios 是很輕量的套件，它整理 HTTP client 的方法，讓處理 AJAX 過程簡單方便。
-- 使用：呼叫 API 的 Custom hook， `useAxiosData` 裡面設定了 BaseURL 等等方法。也基於 Axios˙ 的週期，去自製了 isLoading、isError 等方法。
+- 使用：呼叫 API 的 Custom hook， `useGetResponse` 裡面設定了 BaseURL 等等方法。也基於 Axios˙ 的週期，去自製了 isLoading、isError 等方法。
 
 ### [Webpack](https://webpack.js.org/)
 

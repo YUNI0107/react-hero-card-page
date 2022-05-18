@@ -18,7 +18,7 @@ function AbilityBar({ percent }: { percent: number }) {
           background={theme ? theme.background : tw`bg-gray-900`}
         ></S.BarInner>
       </div>
-      <h3 className="w-12 ml-5 text-white">{Math.floor(percent)} %</h3>
+      <h3 className="w-12 ml-5 text-white">{Math.round(percent)} %</h3>
     </div>
   )
 }

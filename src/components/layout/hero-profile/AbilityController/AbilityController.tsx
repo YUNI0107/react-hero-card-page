@@ -8,16 +8,14 @@ import { HeroAbilityKey } from '@/types/hero'
 function AbilityController({
   ability,
   abilityValue,
-  totalValue,
+  barPercent,
   abilityHandler,
 }: {
   ability: HeroAbilityKey
   abilityValue?: number
-  totalValue?: number
+  barPercent?: number
   abilityHandler: (ability: HeroAbilityKey, handler: 'plus' | 'minus') => void
 }) {
-  const barPercent = totalValue && abilityValue ? (abilityValue / totalValue) * 100 : 0
-
   return (
     <div className="flex my-2 flex-col items-start md:flex-row md:items-center">
       <div className="flex items-center my-4 md:mr-3 md:my-0">
@@ -31,7 +29,7 @@ function AbilityController({
         </CircleButton>
       </div>
 
-      <AbilityBar percent={barPercent} />
+      <AbilityBar percent={barPercent || 0} />
     </div>
   )
 }

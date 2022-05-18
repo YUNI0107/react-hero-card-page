@@ -13,7 +13,7 @@ import { IHeroAbility, HeroAbilityKey } from '@/types/hero'
 import { HeroContext } from '@/contexts/HeroContextSection'
 
 // hooks
-import useAxiosData from '@/hooks/useAxiosData'
+import useGetResponse from '@/hooks/useGetResponse'
 
 function HeroProfilePage() {
   const [profile, setProfile] = useState<IHeroAbility | null>(null)
@@ -21,12 +21,34 @@ function HeroProfilePage() {
   const [warnMessage, setWarnMessage] = useState<string | null>(null)
   const { heroId } = useParams()
   const { heroList } = useContext(HeroContext)
+  const abilityList: Array<keyof IHeroAbility> = ['str', 'int', 'agi', 'luk']
 
   // memos
   const isKnownHero = useMemo(() => {
     // Check router param is correct or not
     return heroList.find((hero) => hero.id === heroId)
   }, [heroList, heroId])
+
+  // api
+  const { response: abilityData, reFetchData: getProfile } = useGetResponse<IHeroAbility>(
+    {
+      url: `heroes/${heroId}/profile`,
+      method: 'get',
+    },
+    [heroId, isKnownHero],
+    Boolean(heroId) && Boolean(isKnownHero)
+  )
+
+  const { response: resetProfileResponse, reFetchData: resetProfile } =
+    useGetResponse<IHeroAbility>(
+      {
+        url: `heroes/${heroId}/profile`,
+        method: 'patch',
+        data: profile,
+      },
+      [],
+      Boolean(heroId) && Boolean(profile)
+    )
 
   // methods
   const abilityHandler = (ability: HeroAbilityKey, handler: 'plus' | 'minus') => {
@@ -99,26 +121,6 @@ function HeroProfilePage() {
     return totalPoints - profilePoints
   }, [totalPoints, profile])
 
-  // api
-  const { response: abilityData } = useAxiosData<IHeroAbility>(
-    {
-      url: `heroes/${heroId}/profile`,
-      method: 'get',
-    },
-    [heroId, isKnownHero],
-    Boolean(heroId) && Boolean(isKnownHero)
-  )
-
-  const { reFetchData: resetProfile } = useAxiosData<IHeroAbility>(
-    {
-      url: `heroes/${heroId}/profile`,
-      method: 'patch',
-      data: profile,
-    },
-    [],
-    Boolean(heroId) && Boolean(profile)
-  )
-
   // effects
   useEffect(() => {
     setDateToProfile()
@@ -130,6 +132,10 @@ function HeroProfilePage() {
       setWarnMessage(null)
     }
   }, [remainingPoints])
+
+  useEffect(() => {
+    if (resetProfileResponse) getProfile(Boolean(heroId))
+  }, [resetProfileResponse])
 
   // intercept
   if (heroList.length === 0) {
@@ -143,30 +149,20 @@ function HeroProfilePage() {
   return (
     <div className="w-full">
       <div>
-        <AbilityController
-          ability="str"
-          abilityHandler={abilityHandler}
-          abilityValue={profile?.str}
-          totalValue={totalPoints}
-        />
-        <AbilityController
-          ability="int"
-          abilityHandler={abilityHandler}
-          abilityValue={profile?.int}
-          totalValue={totalPoints}
-        />
-        <AbilityController
-          ability="agi"
-          abilityHandler={abilityHandler}
-          abilityValue={profile?.agi}
-          totalValue={totalPoints}
-        />
-        <AbilityController
-          ability="luk"
-          abilityHandler={abilityHandler}
-          abilityValue={profile?.luk}
-          totalValue={totalPoints}
-        />
+        {abilityList.map((ability) => {
+          const abilityValue = profile?.[ability]
+          const barPercent = abilityValue ? (abilityValue / totalPoints) * 100 : 0
+
+          return (
+            <AbilityController
+              key={ability}
+              ability={ability}
+              abilityHandler={abilityHandler}
+              abilityValue={abilityValue}
+              barPercent={barPercent}
+            />
+          )
+        })}
       </div>
 
       <div className="flex items-center w-full flex-col mt-10 md:items-end">

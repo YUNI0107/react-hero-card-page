@@ -124,7 +124,7 @@ postcss.config.js
 
 ### [twin.macro](https://github.com/ben-rogerson/twin.macro)
 
-- 簡介：Twin blends the magic of Tailwind with the flexibility of css-in-js. 它讓你可以把 Tailwindcss 變得可以使用城 css-in-js. 並且還可以結合 styled-components / emotion 做使用。 PS.作者很認真在維護，有問題你都會看到他回答。但文件真的是沒寫很好...，你要從 issues 找問題比較快。
+- 簡介：Twin blends the magic of Tailwind with the flexibility of css-in-js. 它讓你可以把 Tailwindcss 變得可以使用成 css-in-js. 並且還可以結合 styled-components / emotion 做使用。 PS.作者很認真在維護，有問題你都會看到他回答。但文件真的是沒寫很好...，你要從 issues 找問題比較快。
 - 使用：最常使用的是直接 css attribute + JS 的控制，決定 twStyle 是否顯示。 在 Webpack 設定上極其麻煩，我這次是第一次在自己建置的上使用 twin.macro 就踩到不少坑。需要安裝很多不同的 babel-plugin，才能成功 Run 起來。
 
 ### [react-router-dom](https://reactrouter.com/)
